@@ -1,0 +1,167 @@
+<p>multibatch works!</p>
+
+<div class="container">
+    <div class="row">
+      <!-- <div class="col-2 col-lg-2 col-md-2 sol-sm-2"></div> -->
+      <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+          <h3 class="text-center">Form</h3>
+        <form [formGroup]="productForm" (ngSubmit)="saveMultiProduct(productForm.value)">
+            <!-- <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Name" formControlName="name" required>
+                            <div class="alert-danger" *ngIf="!productForm.controls['name'].valid && (productForm.controls['name'].touched)">
+                              <div [hidden]="!productForm.controls['name'].errors.required">
+                                Name is required.
+                              </div>
+                            </div>
+                          </div>
+                </div>
+                <div class="col-6">
+                          <div class="form-group">
+                            <label>Desc</label>
+                            <input type="text" class="form-control" placeholder="Description" formControlName="desc" required>
+                            <div class="alert-danger" *ngIf="!productForm.controls['desc'].valid && (productForm.controls['desc'].touched)">
+                              <div [hidden]="!productForm.controls['desc'].errors.required">
+                                Description is required.
+                              </div>
+                              <div [hidden]="!productForm.controls['desc'].errors.minlength">
+                                Description must be have 10 character length.
+                              </div>
+                              <div [hidden]="!productForm.controls['desc'].errors.maxlength">
+                                Description must be have 1000 character length.
+                              </div>
+                            </div>
+                          </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="number" class="form-control" placeholder="price" formControlName="price" required>
+                            <div class="alert-danger" *ngIf="!productForm.controls['price'].valid && (productForm.controls['price'].touched)">
+                                <div [hidden]="!productForm.controls['price'].errors.required">
+                                Price is required.
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-6">
+                        <div class="form-group">
+                                <label>Select </label>
+                                <select formControlName="productname" id="orders" class="form-control">
+                                        <option *ngFor="let productname of productnames; let i = index" [value]="productnames[i].p_id">
+                                          {{productnames[i].p_name}}
+                                        </option>
+                                      </select>
+                                <div class="alert-danger" *ngIf="!productForm.controls['productname'].valid && (productForm.controls['productname'].touched)">
+                                  <div [hidden]="!productForm.controls['productname'].errors.required">
+                                    Product Name is required.
+                                  </div>
+                                </div>
+                        </div>
+                </div>
+            </div> -->
+        
+          <div formArrayName="mobiles">
+            <!-- <h3>Add Batch</h3> -->
+            
+            <fieldset class="fieldset-border">
+                
+              <div class="row">
+                  <div class="col-12">
+                    <h5 class="float-left">Add Batches</h5>
+                <button type="button" class="float-right" (click)="addNewMobile()">Add New</button>
+                </div>
+              </div>
+              <br/>
+            <div *ngFor="let mob of mobiles.controls;let i=index" [formGroupName]="i">
+              <!-- <label>Mobile {{i+1}}</label>
+              <input type="text" [formControlName]="i">
+              <button (click)="removeMobile(i)">Remove</button> -->
+               
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                          <!-- <label>Batch No</label> -->
+                          <input type="text" class="form-control" placeholder="Batch No" formControlName="name">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                          <!-- <label>Batch Qty</label> -->
+                          <input type="text" class="form-control" placeholder="Qty" formControlName="desc">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                          <!-- <label>Manf Dt</label> -->
+                          <input type="text" class="form-control" placeholder="Manufacturing Date" formControlName="price">
+                        </div>
+                    </div>
+                    <!-- <div class="col-3">
+                        <div class="form-group">
+                          <label>Exp Dt</label>
+                          <input type="text" class="form-control" placeholder="Expiry Date" formControlName="BatchExpDt">
+                        </div>
+                    </div> -->
+                    <div class="col-1">
+                        <div class="form-group">
+                            <button (click)="removeMobile(i)">X</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            </fieldset>
+          </div>
+
+            
+
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Submit</button>
+        </form>
+      </div>
+      <!-- <div class="col-2 col-lg-2 col-md-2 sol-sm-2"></div> -->
+    </div>
+  </div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+        <!-- <button class="btn btn-success" (click)="getNavigation('create', '')">Create New Product</button> -->
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+        <table #multiproductsTable class="display" style="width:100%">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let multiproduct of multiproducts; let i =index;">
+            <td>{{i + 1}}</td>
+            <td>{{multiproduct.p_name}}</td>
+            <td>{{multiproduct.p_description}}</td>
+            <td>$ {{multiproduct.p_price}}</td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="getNavigation('view', product.p_id)">View</button>
+              <button type="button" class="btn btn-warning" (click)="getNavigation('multipleform', product.p_id)">Edit</button>
+              <button type="button" class="btn btn-danger" (click)="deleteProduct(product.p_id)">Delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- <pre>{{productForm.value | json}}</pre> -->

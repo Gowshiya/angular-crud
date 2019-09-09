@@ -1,0 +1,131 @@
+<p>multipleform works!</p>
+
+<div class="container" *ngIf="isDone">
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+        <form [formGroup]="productForm" (ngSubmit)="saveUpdateProductData(productForm.value)">
+  
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" placeholder="Enter Name" formControlName="name" required>
+            <div class="alert-danger" *ngIf="!productForm.controls['name'].valid && (productForm.controls['name'].touched)">
+              <div [hidden]="!productForm.controls['name'].errors.required">
+                Name is required.
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Desc</label>
+            <input type="text" class="form-control" placeholder="Description" formControlName="desc" required>
+            <div class="alert-danger" *ngIf="!productForm.controls['desc'].valid && (productForm.controls['desc'].touched)">
+              <div [hidden]="!productForm.controls['desc'].errors.required">
+                Description is required.
+              </div>
+              <div [hidden]="!productForm.controls['desc'].errors.minlength">
+                Description must be have 10 character length.
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label>Price</label>
+            <input type="number" class="form-control" placeholder="price" formControlName="price" required>
+            <div class="alert-danger" *ngIf="!productForm.controls['price'].valid && (productForm.controls['price'].touched)">
+              <div [hidden]="!productForm.controls['price'].errors.required">
+                Price is required.
+              </div>
+            </div>
+          </div>
+  
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Submit</button>
+  
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="container" *ngIf="router.url == '/view/64'"> -->
+    <!-- <div class="container" ng-click="viewNavigation()"> -->
+        <div class="container" *ngIf="!isDone">    
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+        <table class="table table-striped">
+          <tr>
+            <td>Name</td>
+            <td>{{productData['p_name']}}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>{{productData['p_description']}}</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>{{productData['p_price']}}</td>
+          </tr>
+        </table>
+        <br>
+        <button class="btn btn-warning" (click)="navigation('')">Go Back</button>
+      </div>
+    </div>
+  </div>
+
+<!-- <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 sol-sm-12">
+        <table class="table table-striped">
+          <tr>
+            <td>Name</td>
+            <td>{{productData['p_name']}}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>{{productData['p_description']}}</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>{{productData['p_price']}}</td>
+          </tr>
+        </table>
+        <br>
+        <button class="btn btn-warning" (click)="navigation('')">Go Back</button>
+      </div>
+    </div>
+  </div> -->
+
+<div class="container">
+    <!-- <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+        <button class="btn btn-success" (click)="getNavigation('create', '')">Create New Product</button>
+      </div>
+    </div> -->
+    <br>
+    <div class="row">
+      <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xl-12 col-xs-12">
+        <table #productsTable class="display" style="width:100%">
+          <thead>
+          <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let product of products; let i =index;">
+            <td>{{i + 1}}</td>
+            <td>{{product.p_name}}</td>
+            <td>{{product.p_description}}</td>
+            <td>$ {{product.p_price}}</td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="viewNavigation('mview', product.p_id)">View</button>
+              <button type="button" class="btn btn-warning" (click)="getNavigation('mupdate', product.p_id)">Edit</button>
+              <button type="button" class="btn btn-danger" (click)="deleteProduct(product.p_id)">Delete</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
